@@ -29,7 +29,10 @@
      (coin-change-count-dp coins amount table)))
   ([[coin & rst] amount known-solutions]
    (if-not coin
+     ;; We've traversed all coins, therefore the table of known solutions should hold the coin change count as
+     ;; its last element
      (last known-solutions)
+     ;; build the know solutions vector
      (let [new-known-solutions (reduce (fn [acc c] (update acc c + (acc (- c coin))))
                                        known-solutions
                                        (range coin (inc amount)))]
